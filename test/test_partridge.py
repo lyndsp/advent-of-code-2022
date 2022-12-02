@@ -1,4 +1,4 @@
-from alan_pytridge.pint import getPhrase
+from advent_of_code.pint import getPhrase
 
 
 def test_nothing_found_in_empty_list():
