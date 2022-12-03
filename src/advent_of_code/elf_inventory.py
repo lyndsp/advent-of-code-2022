@@ -1,2 +1,7 @@
 def sumCaloriesPerElf(calories):
-    return 1
+    calorySum = 0
+
+    for item in calories :
+        calorySum += item
+
+    return calorySum
