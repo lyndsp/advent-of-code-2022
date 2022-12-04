@@ -1,9 +1,15 @@
-def sumCaloriesPerElf(calories):
-    calorySum = 0
+def sumCalories(calories):
+    calories = [int(c) for c in calories]
 
-    calories = list(map(int, calories))
+    return sum(calories)
 
-    for item in calories :
-        calorySum += item
+def highestElfCalories(elfInventories):
+    highestCalorySum = 0
 
-    return calorySum
+    for inventory in elfInventories :
+        calorySum = sumCalories(inventory)
+
+        if calorySum > highestCalorySum :
+            highestCalorySum = calorySum
+        
+    return highestCalorySum
