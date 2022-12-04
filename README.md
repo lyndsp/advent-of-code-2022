@@ -1,10 +1,6 @@
-# Mines a pint!
+# Advent of code 2022 - in python!
 
-This project is attempting to give a baseline for the simplest python project with the following features
-
-* linting
-* test coverage
-* continual testing
+Setup based on https://github.com/ollyjshaw/alan_pytridge
 
 ## Setup your python environnment
 
@@ -14,11 +10,9 @@ Use `pipenv` !! https://pipenv.readthedocs.io/en/latest/
 
 `pipenv install --dev`
 
-## Run the tests with coverage
+## Run the tests
 
-Anything less than 100% will fail
-
-`pytest --cov=alan_pytridge`
+`pytest`
 
 ## Lint the project
 
