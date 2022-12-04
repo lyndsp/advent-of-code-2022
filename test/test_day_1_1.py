@@ -24,3 +24,10 @@ def test_parse_inventories():
     inventories = parseInventories("day-1-1-test.txt")
 
     assert len(inventories) == 2
+
+def test_answer_day_1_1():
+    inventories = parseInventories("day-1-1.txt")
+
+    total = highestElfCalories(inventories)
+
+    assert total == 69501
