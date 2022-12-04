@@ -1,4 +1,4 @@
-from advent_of_code.elf_inventory import sumCalories, highestElfCalories
+from advent_of_code.elf_inventory import *
 
 def test_single_elf_single_item():
     calories = [1]
@@ -19,3 +19,8 @@ def test_multiple_elves_with_different_multiple_items():
     calories = [[5, 2],[8,4]]
     total = highestElfCalories(calories)
     assert total == 12
+
+def test_parse_inventories():
+    inventories = parseInventories("day-1-1-test.txt")
+
+    assert len(inventories) == 2
