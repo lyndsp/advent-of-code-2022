@@ -4,12 +4,8 @@ def sumCalories(calories):
     return sum(calories)
 
 def highestElfCalories(elfInventories):
-    highestCalorySum = 0
+    caloriesPerElf = [sumCalories(inventory) for inventory in elfInventories]
 
-    for inventory in elfInventories :
-        calorySum = sumCalories(inventory)
+    sortedCaloriesPerElf = sorted(caloriesPerElf, reverse=True)
 
-        if calorySum > highestCalorySum :
-            highestCalorySum = calorySum
-        
-    return highestCalorySum
+    return sortedCaloriesPerElf[0]
