@@ -1,21 +1,47 @@
+def parseRounds(path):
+    rounds = list()
+
+    with open(path) as f:
+        for line in f:
+            round = line.strip()
+            rounds.append((round[0], round[2]))
+
+    return rounds
+
 def scoreOneRound(round):
-    # A/X Rock, B/Y Paper, C/Z Scissors
-    plays = {'A':1, 'B':2, 'C':3, 'X':1, 'Y':2, 'Z':3}
+    rock = 1
+    paper = 2
+    scissors = 3
+    plays = {'A':rock, 'B':paper, 'C':scissors, 'X':rock, 'Y':paper, 'Z':scissors}
 
     opponentPlay = plays[round[0]]
     myPlay = plays[round[1]]
 
-    win = myPlay > opponentPlay
-    loose = myPlay < opponentPlay
-    draw = myPlay == opponentPlay
-
     roundScore = myPlay
 
-    if loose :
-        roundScore += 0
-    elif draw :
-        roundScore += 3
-    elif win :
-        roundScore += 6
+    # draw
+    if myPlay == opponentPlay :
+        return roundScore + 3
 
-    return roundScore
+    win = False
+
+    # Rock > Scissors
+    # Paper > Rock
+    # Scissors > Paper
+
+    if myPlay == rock and opponentPlay == scissors :
+        win = True
+    elif myPlay == paper and opponentPlay == rock :
+        win = True
+    elif myPlay == scissors and opponentPlay == paper :
+        win = True
+
+    if not win :
+        return roundScore
+
+    return roundScore + 6
+
+def scoreRounds(rounds):
+    totalScore = sum(scoreOneRound(round) for round in rounds)
+
+    return totalScore
