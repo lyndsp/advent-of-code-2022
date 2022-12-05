@@ -12,34 +12,28 @@ def scoreOneRound(round):
     rock = 1
     paper = 2
     scissors = 3
-    plays = {'A':rock, 'B':paper, 'C':scissors, 'X':rock, 'Y':paper, 'Z':scissors}
+    plays = {'A':rock, 'B':paper, 'C':scissors}
 
     opponentPlay = plays[round[0]]
-    myPlay = plays[round[1]]
 
-    roundScore = myPlay
+    lose = 0
+    draw = 3
+    win = 6
+    outcomes = {'X':lose, 'Y':draw, 'Z':win}
 
-    # draw
-    if myPlay == opponentPlay :
-        return roundScore + 3
+    outcome = outcomes[round[1]]
 
-    win = False
+    playForOutcome = { 
+        rock: {lose:scissors, draw:rock, win:paper}, 
+        paper: {lose:rock, draw:paper, win:scissors},
+        scissors: {lose:paper, draw:scissors, win:rock} 
+        }
 
-    # Rock > Scissors
-    # Paper > Rock
-    # Scissors > Paper
+    myPlay = playForOutcome[opponentPlay][outcome]
 
-    if myPlay == rock and opponentPlay == scissors :
-        win = True
-    elif myPlay == paper and opponentPlay == rock :
-        win = True
-    elif myPlay == scissors and opponentPlay == paper :
-        win = True
+    roundScore = myPlay + outcome
 
-    if not win :
-        return roundScore
-
-    return roundScore + 6
+    return roundScore
 
 def scoreRounds(rounds):
     totalScore = sum(scoreOneRound(round) for round in rounds)
