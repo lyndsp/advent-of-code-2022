@@ -20,3 +20,23 @@ def test_A_has_priority_27():
     priority = itemPriority('A')
 
     assert priority == 27
+
+def test_find_matching_item():
+    matchingItem = findMatchingItem("CrZsJsPPZsGzwwsLwLmpwMDw")
+
+    assert matchingItem == 's'
+
+def test_find_matching_item_priority():
+    matchingItemPriority = findMatchingItemPriority("vJrwpWtwJgWrhcsFMMfFFhFp")
+
+    assert matchingItemPriority == 16
+
+def test_total_matching_items_priority():
+    totalPriority = totalMatchingItemsPriority("day-3-test.txt")
+
+    assert totalPriority == 157
+
+def test_day_3_1():
+    totalPriority = totalMatchingItemsPriority("day-3.txt")
+
+    assert totalPriority == 7908
