@@ -5,6 +5,9 @@ class Assignment:
         self.start = int(parts[0])
         self.end = int(parts[1])
 
+    def contains(self, otherAssignment):
+        return self.start <= otherAssignment.start and self.end >= otherAssignment.end
+
     @classmethod
     def parsePair(cls, pairDefinition):
         definitions = pairDefinition.split(",")
