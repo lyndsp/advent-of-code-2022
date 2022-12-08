@@ -34,19 +34,19 @@ def test_assignment_contains_another():
 def test_assignment_does_not_contain_another():
     assignmentPair = Assignment.parsePair("1-2, 2-3")
 
-    overlaps = assignmentPair[1].contains(assignmentPair[0])
+    contains = assignmentPair[1].contains(assignmentPair[0])
 
-    assert not overlaps
+    assert not contains
 
 def test_assignment_also_does_not_contain_another():
     assignmentPair = Assignment.parsePair("1-3, 1-2")
 
-    overlaps = assignmentPair[1].contains(assignmentPair[0])
+    contains = assignmentPair[1].contains(assignmentPair[0])
 
-    assert not overlaps
+    assert not contains
 
 def test_day_4():
-    overlaps = 0
+    contains = 0
 
     with open("day-4.txt") as f:
         for line in f:
@@ -54,6 +54,34 @@ def test_day_4():
             assignmentPair = Assignment.parsePair(assignments)
 
             if assignmentPair[1].contains(assignmentPair[0]) or assignmentPair[0].contains(assignmentPair[1]):
+                contains += 1
+
+    assert contains == 441
+
+def test_assignments_overlap():
+    assignmentPair = Assignment.parsePair("1-2, 2-3")
+
+    assert assignmentPair[1].overlaps(assignmentPair[0])
+
+    assert assignmentPair[0].overlaps(assignmentPair[1])
+
+def test_assignments_dont_overlap():
+    assignmentPair = Assignment.parsePair("1-1, 2-2")
+
+    assert not assignmentPair[1].overlaps(assignmentPair[0])
+
+    assert not assignmentPair[0].overlaps(assignmentPair[1])
+
+def test_day_4_2():
+    overlaps = 0
+
+    with open("day-4.txt") as f:
+        for line in f:
+            assignments = line.strip()
+            assignmentPair = Assignment.parsePair(assignments)
+
+            if assignmentPair[1].overlaps(assignmentPair[0]) or assignmentPair[0].overlaps(assignmentPair[1]):
                 overlaps += 1
 
-    assert overlaps == 441
+    assert overlaps == 861
+
