@@ -56,5 +56,5 @@ def test_day_5_1():
         for line in f:
             stacks.action(line.strip())
     
-    assert stacks.top() == "QMBMJDFTD"
+    assert stacks.top() == "NBTVTJNFJ"
 

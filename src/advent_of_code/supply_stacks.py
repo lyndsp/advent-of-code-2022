@@ -18,6 +18,8 @@ class Stack:
         while itemCounter != itemCount:
             movedItems.append(self.stack.pop())
             itemCounter += 1
+
+        movedItems.reverse()
         
         return movedItems
 
