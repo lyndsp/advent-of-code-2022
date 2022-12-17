@@ -66,4 +66,4 @@ def test_day_5():
    
     markerPosition = findMarker(data)
 
-    assert markerPosition == 5
+    assert markerPosition == 1707

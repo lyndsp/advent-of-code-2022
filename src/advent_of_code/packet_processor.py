@@ -9,14 +9,14 @@ def findMarker(data):
     packet = Packet()
 
     while not packet.markerFound():
-        packet.add(dataBuffer.pop())
+        packet.add(dataBuffer.pop(0))
 
     return packet.markerPosition
 
 class Packet:
     def __init__(self, data=""):
         self.buffer = list(data)
-        self.markerPosition = 1
+        self.markerPosition = 0
 
     def add(self, d):
         if self.isDuplicate(d):
@@ -31,7 +31,7 @@ class Packet:
 
     def clearDuplicate(self, d):
         while len(self.buffer) > 0 :
-            b = self.buffer.pop()
+            b = self.buffer.pop(0)
 
             if b == d:
                 return
