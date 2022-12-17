@@ -37,7 +37,7 @@ class Packet:
                 return
 
     def needsMoreData(self):
-        return len(self.buffer) < 4
+        return len(self.buffer) < 14
 
     def markerFound(self):
 

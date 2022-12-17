@@ -66,4 +66,30 @@ def test_day_5():
    
     markerPosition = findMarker(data)
 
-    assert markerPosition == 1707
+    assert markerPosition == 3697
+
+def test_find_marker_at_19():
+    markerPosition = findMarker("mjqjpqmgbljsphdztnvjfqwrcgsmlb")
+
+    assert markerPosition == 19
+
+def test_find_marker_at_23_1():
+    markerPosition = findMarker("bvwbjplbgvbhsrlpgdmjqwftvncz")
+
+    assert markerPosition == 23
+
+def test_find_marker_at_23_2():
+    markerPosition = findMarker("nppdvjthqldpwncqszvftbrmjlhg")
+
+    assert markerPosition == 23
+
+def test_find_marker_at_29():
+    markerPosition = findMarker("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg")
+
+    assert markerPosition == 29
+
+def test_find_marker_at_26():
+    markerPosition = findMarker("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw")
+
+    assert markerPosition == 26
+
