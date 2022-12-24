@@ -1,17 +1,18 @@
-# The start of a packet is indicated by a sequence of four characters that are all different.
-
+# The start of a packet is indicated by a sequence of four characters
+# that are all different.
 # mjqjpqmgbljsphdztnvjfqwrcgsmlb
 
-def findMarker(data):
+def find_marker(data):
 
-    dataBuffer = list(data)
+    data_buffer = list(data)
 
     packet = Packet()
 
     while not packet.markerFound():
-        packet.add(dataBuffer.pop(0))
+        packet.add(data_buffer.pop(0))
 
     return packet.markerPosition
+
 
 class Packet:
     def __init__(self, data=""):
@@ -47,5 +48,5 @@ class Packet:
         for b in self.buffer:
             if self.buffer.count(b) > 1:
                 return False
-        
+
         return True

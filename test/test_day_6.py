@@ -1,18 +1,18 @@
-from advent_of_code.packet_processor import *
+from advent_of_code.packet_processor import Packet, find_marker
 
 # The start of a packet is indicated by a sequence of four characters that are all different.
 
 # mjqjpqmgbljsphdztnvjfqwrcgsmlb
 
-# After the first three characters (mjq) have been received, 
-# there haven't been enough characters received yet to find the marker. 
+# After the first three characters (mjq) have been received,
+# there haven't been enough characters received yet to find the marker.
 
-# The first time a marker could occur is after the fourth character is received, 
+# The first time a marker could occur is after the fourth character is received,
 # making the most recent four characters mjqj. Because j is repeated, this isn't a marker.
 
-# The first time a marker appears is after the seventh character arrives. 
-# Once it does, the last four characters received are jpqm, which are all different. 
-# In this case, your subroutine should report the value 7, 
+# The first time a marker appears is after the seventh character arrives.
+# Once it does, the last four characters received are jpqm, which are all different.
+# In this case, your subroutine should report the value 7,
 # because the first start-of-packet marker is complete after 7 characters have been processed.
 
 # bvwbjplbgvbhsrlpgdmjqwftvncz: first marker after character 5
@@ -21,75 +21,88 @@ from advent_of_code.packet_processor import *
 # zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 11
 # How many characters need to be processed before the first start-of-packet marker is detected?
 
+
 def test_empty_needs_four_characters():
     packet = Packet()
 
     assert packet.needsMoreData()
 
+
 def test_full_with_four_characters():
     packet = Packet("mjqj")
 
-    assert packet.needsMoreData() == False
+    assert packet.needsMoreData() is False
+
 
 def test_is_not_marker():
     packet = Packet("mjqj")
-    
-    assert packet.markerFound() == False
+
+    assert packet.markerFound() is False
+
 
 def test_is_marker():
     packet = Packet("mjql")
-    
+
     assert packet.markerFound()
 
+
 def test_find_marker_at_5():
-    markerPosition = findMarker("bvwbj")
+    markerPosition = find_marker("bvwbj")
 
     assert markerPosition == 5
 
+
 def test_find_marker_at_6():
-    markerPosition = findMarker("nppdvjthqldpwncqszvftbrmjlhg")
+    markerPosition = find_marker("nppdvjthqldpwncqszvftbrmjlhg")
 
     assert markerPosition == 6
 
+
 def test_find_marker_at_10():
-    markerPosition = findMarker("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg")
+    markerPosition = find_marker("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg")
 
     assert markerPosition == 10
 
+
 def test_find_marker_at_11():
-    markerPosition = findMarker("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw")
+    markerPosition = find_marker("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw")
 
     assert markerPosition == 11
 
+
 def test_day_5():
     data = "rqwqtwwrmrqqrcrtrpppjrjgrgjgqgttgbbhppftpfpdpmpsstffqvfqvvdjjpllltqltqtrrzlllbldbdsdqqgpqggzccgbgnnmjmljmljldjldjjlnnhndhdmmslmslmlhmmntnrtnrnbrbqrqhqfftwftfsfzfcfrrzllchcwwtwstwwjwrjjfwwgzwzqzpzhzqhqbhqhssltsszhsszdssrwssdppjcpjjrwjwnwjnnzjjhsjhsjsjvvtffffqfflglwglgbgpbgbgghfghfhdfhdfhfssqppvlvslltwwhwvwpwgggnpnnmqnntqnnlhhdbhdbbtvvcrrcgrrdrvrjvvlmlnmndnmnrncnznsnsqnsswrwzwmwzzbpbhphqhpqpbpqpjpjvpvwpvwppdvdhdccqbccfncctrcrjcjjdsdhdnhhwpwlwwbmbhmbhhpzhhccvffqqnsqqmnnspnnpfpzppspgsppgbbdwbbdcchfhgfhfllljtllnjlnlddvcdvdqvvqwqppprtpthtthqqfbqqpfpzfpfcfsscrsccbgbngbbgdbbpgpqqlmqlmmgffqqqsbqbtblbwbqqvbqvbqvvnzvzpvvqhvqqtltptllbflbflbflltddlblflvfvbffmsffhlhshmmgbbgjjdndqqmqllzjzvvhjhnhcnchhznnhhppwqpwpffwvwzzppwpfwftwtnnqbnqnrnrzznffzzblzlvzlzrrszscsqcssbggcgvvddsttgqqgwgcclzzszddlvddvbddrlrcllrblrrhlldzdtdccqllsblsszlszzdllhjljhhhzhffdwfdwfddwdtdrtdtntddldsllqffdvdhdpdhdrdprprrhggdqgghggmwgmghhchlhmllrnrdrcrqccbqqfbqbccjpjhhvppcwpwffmmzzfqflfjfdfbfqqtmthmttwftwwpmpzplzzpvvgppsbpbccbtcbcddzbzwwmsscrcctgtgjgtjthhjzzcqqmmmvccwjcwjwzzwnnwgwtgwwbsbvbccrscccnggfjfwfjfrfsfddncdncndnqqwzzmssbdsbswswdddpdqdbddcvcmmwwssrtrrlddndmdtmtdmttwwmsmffwqwvwbwhbbqfqqgcqcmctctntjntnbnrbrmbbqtqccqbcbvbnbqnnghgbbmfmwmdwmdmpmwppdwpdwwnzwnwrnwrnntqnttcmcqqbrqrttsjtstcscpcspsnswsggrhggjrjjbhhbnbmmdlmddtqdtdrdwwjvjgjjdhjdddbwwsfflppbwbcbpbjjzqznnrwnnvmvjvwvqqrlljgjmjjqhjhwjhwjjsvsnvvlwlqqjpjjbsjjcddtfthffrqfrqrfqfrfllfzzqllztltnltntpttqmmgwmwwwjjdrjrzrlrwlwzzzzphpphvphvphvpvdvfdflljgglrlrqlrrfpfqpqnpqpmmblbflbfbpfpwpjwpjpbjpjmjljblldbllnrnjjjljrlrcrrgzgbbzrznzzhnzhhtmhmqhmqqnzzvfzvzfftjftfvvpmvppwzzhnzhzvvwzwwqcwctwwgrrtgglgngsgvgwvwpvpbbrvrvwrvwvbwwpsprrrcbbpqppfjjjqnjndnmddvsvlslmmwwdwcchmmrjmjwwsrwrhwwpcgmpmvbdmlmqbnblbbgtmtgqslnvcnmwrflrnwhqzrsnwhncwdvbcpjrqsscwzrjvslhscpvmqjnltwhshjmbhgttbzllrvpnhgdmwtddbwmpgbhrndpgwzfvqdmpcvhlnjnqbwqmshgwhmfjgsbscsjtfbfvmlljqwwjtnltbzjpcqdfmdldvmsnmzqmghcvhlpjzzszcpvldrflbcppzwgppfpbslplrqwgbfwpwbtbnrmbrrrpqndzvhmlhvtlnjvhdrhhvmwzjntsgffjsdpdlhnlslnbmbsmdsvpmpbjpjcwhbpfnhbmttfglglnnhhcqvbpvnrwcszwjsdhqwctrpgsrcbfpzhbnrbllrlflqdlgzwpwgwwvmbsppbcjcdltbgwfndqjlvndhtclfmwnqrbfvvqdzspfcslplhtmsqqtrcdvbhfscvnmzplcglwnzbvgflclclqmdgfzjqqrrmpcqrzgqcnzbmncmvdzrmmvfqrrqzqbjmjgjwmfbnmmgvmzsgjjspjqbvfhrdvllgqsffjnfqdthjbjwhwqdqhsnctwgbszvrsbwbpptcjjvftnhdmwmhtjrjrlrdrqjznhqftgtldnpbrlprjmplmwdbzqpmwwvcqccjlhqbhcjprvrfmmfmljwmbrlhcglthgbmrfmbpsztfcglpzlfbpjhmvcmvrprmvmrvvgbbllzschwshhfbnmgwrbhlqvsdjdmmbtjzthwssghtqvhtqcswdhbwhphhsrwhwwtslwvrhpgqfmftnrtqpwfqqdgftdlqfndjlzhvlrthnqdqrzpprdgwwqlplrmqtdqgbdntmjcjhlbbmctvnnhtppfbjpsbmndbdplqlfqfhzqvtqcvmprwbhdtjrqrqvmcssqnfqwtchmjfjlpwsghplbthdnbhfbhhphdmlmtjcvmzjbnqbfldrvlmjfnnrlsnwrtnrpfqdhchltmbvjzhgjwzblqdthmffztqvzzfszmdqdzlfpbfgjfdjqscrhvjflbllnlghncczrlpcbwpnmzcnqhbfnlmnbqvmwvbchwhlfcssctsdcwmtfdgbhljwprfncdgwlgzzmvfqrdsmlwbrmbmtzqqdqdpzvtbstscglrwdpndnstrhgjchnpzsvcjngmzsddwsbllpvqqzzjlmsbncbndqmqphzqzcngjzpfnjmsvngtcvhhjsssrnhjrsmvbsrdjcrppvgsqbqjzbrhjqlgmqfclbrdhwwjdlsjnmjcjrmsstngswrhmdqthprcbrndfpdjgpqtfmmfvbztqdhzhzbzhjjpfgnvrmspdvmhfvbvztmlrhfqfdcfnzzndlfldpfhrbjrwlwnprdmqjwppbrdjhpbvnrvjlrbwdwttzhqqgcclbwghbgrhcvwjrrchqgzztrjgrltcpdscjdfcphndfzdqsbpsjrljdnflfvrzcrjflddfgpvnpmdqbhzwbfrpzsnpbcbgfchvvmqpnfpvvdvhfnpbfzwmbnlpqzgrpwtsjbpzdrsfmnfqwqvpgnrjhmvmphlfdpfhdjljlzftdzdvhjrvjdctwfrctglwmrtdlrvmhcqvfvpgmstghczmvclptzspdsrlvrgvjtvflhsmqswdpqjrrnhgrggzmcpqsctqbhpqrsbstwzgzghqgltcpbrhbcdqlhfjhlcrnhrpjdzlzqqprvzntbjztqgdqqttmbpbcfbjmdjqsflbczmfnsjdzcnnmjjllhvwbwlgrlpvbffwjvctwnrsfqdnwntscpsjnshhdmcqmcpscrmzltldwlmfnbhbtprsgtsbvzfrsfpvmqjzjqqhwdjjzvbhrvtbscrcpzrqsbgfbpwqfmbsrlhhtntjmtrtlwqsdbmgtdlrwfdnmwwzlltbrjgghbstbnffzmzzdlcdgvmrzsjnqjvczmhrgwbrblrqfmzbbcnfsbfpgjsmptzbclfdnwfgbzlpbgqrdhdmfjdnlzczdpvtbzdmrthslngbrldllfcjplhglmwsfpqjnrgpgqfmbbwchbrqqsncfwnmgdmtchdhlzzqjvtvtvgqbtwvwpsjqwdqhrlfmdgdzchvfbcmqjllpjtnphwqvfwpcjmzqhsbwlcmbsgththrsjtnzlsrcptgtrfcwptbstcsdzbwjljzjztzbqsjdvwglpbpgdjtthjjmsnljltglqcszbzqmblfpncntjzzhmjffldcrcvjjswvzlfffrmsgjtpzggtlpfwpwbmhmggpnmzwrgdjrhglnhfdcjdfjtdjvrnlgqtfqmpgjcvcmnwhhbczwwntfbmgssglngqlttfpcznswvmbprsrzljtlwlljnbbrnwdvvlsbdv"
-   
-    markerPosition = findMarker(data)
+
+    markerPosition = find_marker(data)
 
     assert markerPosition == 3697
 
+
 def test_find_marker_at_19():
-    markerPosition = findMarker("mjqjpqmgbljsphdztnvjfqwrcgsmlb")
+    markerPosition = find_marker("mjqjpqmgbljsphdztnvjfqwrcgsmlb")
 
     assert markerPosition == 19
 
+
 def test_find_marker_at_23_1():
-    markerPosition = findMarker("bvwbjplbgvbhsrlpgdmjqwftvncz")
+    markerPosition = find_marker("bvwbjplbgvbhsrlpgdmjqwftvncz")
 
     assert markerPosition == 23
+
 
 def test_find_marker_at_23_2():
-    markerPosition = findMarker("nppdvjthqldpwncqszvftbrmjlhg")
+    markerPosition = find_marker("nppdvjthqldpwncqszvftbrmjlhg")
 
     assert markerPosition == 23
 
+
 def test_find_marker_at_29():
-    markerPosition = findMarker("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg")
+    markerPosition = find_marker("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg")
 
     assert markerPosition == 29
 
+
 def test_find_marker_at_26():
-    markerPosition = findMarker("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw")
+    markerPosition = find_marker("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw")
 
     assert markerPosition == 26
-
